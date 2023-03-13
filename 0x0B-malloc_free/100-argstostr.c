@@ -1,80 +1,51 @@
-#include "main.h"
-		
 #include <stdlib.h>
-		
+#include <string.h>
+#include "main.h"
+
 /**
-		
- * argstostr - main entry
-		
- * @ac: int input
-		
- * @av: double pointer array
-		
- * Return: 0
-		
+ * argstostr - function declaration
+ * @ac: no of args
+ * @av: array of pointer
+ * Return: char type
  */
-		
+
+char *argstostr(int ac, char **av);
+
+/**
+ * argstostr - function definition
+ * @ac: number of arguments
+ * @av: array of pointers to argumnets
+ * Description: Return NULL of pointer to string
+ * Return: NULL or a pointer to a string
+ */
+
 char *argstostr(int ac, char **av)
-		
 {
-		
-	int i, n, r = 0, l = 0;
-		
+	int row, column, len = 0, total_len = 0;
 	char *str;
-		
 
-		
 	if (ac == 0 || av == NULL)
-		
 		return (NULL);
-		
 
-		
-	for (i = 0; i < ac; i++)
-		
+	for (row = 0; row < ac; row++)
 	{
-		
-		for (n = 0; av[i][n]; n++)
-		
-			l++;
-		
+		len = strlen(av[row]);
+		total_len += len + 1;
 	}
-		
-	l += ac;
-		
 
-		
-	str = malloc(sizeof(char) * l + 1);
-		
+	str = (char *) malloc(total_len * sizeof(char));
 	if (str == NULL)
-		
 		return (NULL);
-		
-	for (i = 0; i < ac; i++)
-		
-	{
-		
-	for (n = 0; av[i][n]; n++)
-		
-	{
-		
-		str[r] = av[i][n];
-		
-		r++;
-		
-	}
-		
-	if (str[r] == '\0')
-		
-	{
-		
-		str[r++] = '\n';
-		
-	}
-		
-	}
-		
-	return (str);
-		
-}
 
+	len = 0;
+	for (row = 0; row < ac; row++)
+	{
+		for (column = 0; av[row][column] != '\0'; column++)
+		{
+			str[len++] = av[row][column];
+		}
+		str[len++] = '\n';
+	}
+	str[len] = '\0';
+	return (str);
+}
