@@ -1,51 +1,40 @@
-#include <stdlib.h>
-#include <string.h>
 #include "main.h"
+#include <stdlib.h>
 
 /**
- * argstostr - function declaration
- * @ac: no of args
- * @av: array of pointer
- * Return: char type
- */
-
-char *argstostr(int ac, char **av);
-
-/**
- * argstostr - function definition
+ * argstostr - concatenates all the arguments of your program.
  * @ac: number of arguments
- * @av: array of pointers to argumnets
- * Description: Return NULL of pointer to string
- * Return: NULL or a pointer to a string
+ * @av: double pointer to arguments
+ *
+ * Return:pointer to new string, or NULL if error
  */
-
 char *argstostr(int ac, char **av)
 {
-	int row, column, len = 0, total_len = 0;
-	char *str;
+	int i, j, k = 0, n = 0;
+	char *s;
 
-	if (ac == 0 || av == NULL)
+	if (ac <= 0 || av == NULL)
 		return (NULL);
-
-	for (row = 0; row < ac; row++)
+	for (i = 0; i < ac; i++)
 	{
-		len = strlen(av[row]);
-		total_len += len + 1;
+		for (j = 0; av[i][j]; j++)
+			n++;
+		n++;
 	}
-
-	str = (char *) malloc(total_len * sizeof(char));
-	if (str == NULL)
+	n++;
+	s = malloc(n * sizeof(char));
+	if (s == NULL)
 		return (NULL);
-
-	len = 0;
-	for (row = 0; row < ac; row++)
+	for (i = 0; i < ac; i++)
 	{
-		for (column = 0; av[row][column] != '\0'; column++)
+		for (j = 0; av[i][j]; j++)
 		{
-			str[len++] = av[row][column];
+			s[k] = av[i][j];
+			k++;
 		}
-		str[len++] = '\n';
+		s[k] = '\n';
+		k++;
 	}
-	str[len] = '\0';
-	return (str);
+	s[k] = '\0';
+	return (s);
 }
